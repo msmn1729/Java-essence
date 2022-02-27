@@ -5,15 +5,12 @@ import java.nio.charset.StandardCharsets;
 
 public class Main5 {
     public static void main(String[] args) throws IOException {
-        String s = "건a열";
-        byte[] b = s.getBytes(StandardCharsets.UTF_8);
-
-        InputStream is = new ByteArrayInputStream(b);
+        InputStream is = new FileInputStream("src/study/test");
         InputStream bis = new BufferedInputStream(is, 8192);
+        // 바이트배열을 쓰면 안좋은 이유? InputStreamReader설명 빼고
         InputStreamReader isr = new InputStreamReader(bis, StandardCharsets.UTF_8);
-        char[] cBuffer = new char[2];
 
-        byte[] buffer = new byte[3];
+        char[] cBuffer = new char[2];
         int len;
 
         while ((len = isr.read(cBuffer)) != -1) {
