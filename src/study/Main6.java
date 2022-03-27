@@ -1,20 +1,27 @@
 package study;
 
-import java.io.*;
-import java.nio.charset.StandardCharsets;
-
 public class Main6 {
-    public static void main(String[] args) throws IOException {
-        InputStream is = new FileInputStream("src/study/tt");
-        InputStream bis = new BufferedInputStream(is, 8192);
-        InputStreamReader isr = new InputStreamReader(bis, StandardCharsets.UTF_8);
+    public static void main(String[] args) throws InterruptedException {
+        Thread t = new Thread(() -> {
+            System.out.println("hello2");
+            try {
+                Thread.sleep(2000);
+            } catch (InterruptedException e) {
+                e.printStackTrace();
+            }
+            System.out.println("world2");
+        });
+//        t.start();
 
-        char[] cBuffer = new char[1];
-        int len;
-        StringBuilder stringBuilder = new StringBuilder();
-        while ((len = isr.read(cBuffer)) != -1) {
-            stringBuilder.append(cBuffer, 0, len);
+        System.out.println("hello2");
+        try {
+            Thread.sleep(2000);
+        } catch (InterruptedException e) {
+            e.printStackTrace();
         }
-        System.out.print(stringBuilder.toString());
+        System.out.println("world2");
+        System.out.println("hello");
+        Thread.sleep(5000);
+        System.out.println("world");
     }
 }
