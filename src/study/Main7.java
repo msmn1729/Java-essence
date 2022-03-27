@@ -1,40 +1,49 @@
 package study;
 
 import java.io.*;
+import java.net.ServerSocket;
+import java.net.Socket;
 import java.nio.charset.StandardCharsets;
 
 public class Main7 {
     public static void main(String[] args) throws IOException {
-        InputStream is = new FileInputStream("src/study/test");
-        InputStream bis = new BufferedInputStream(is, 8192);
+        ServerSocket serverSocket = new ServerSocket(7777);
+        Socket socket = serverSocket.accept();
+
+        InputStream is = socket.getInputStream();
+        System.out.println("[입력 스트림 획득]");
+        BufferedInputStream bis = new BufferedInputStream(is, 8192);
         InputStreamReader isr = new InputStreamReader(bis, StandardCharsets.UTF_8);
 
-        int len, idx = 0;
-        char[] cBuffer = new char[3]; // 캐릭터 배열의 사이즈와 무관하게 개행으로 구분 처리되어야함
-        StringBuilder sb = new StringBuilder();
-        String[] arr = new String[3]; // 3줄로 되어있는 파일을 개행 기준으로 배열에 순서대로 넣기
-        for (int i = 0; i < arr.length; i++) {
-            arr[i] = "";
-        }
+        char[] cBuffer = new char[2];
+        int len;
 
+        Thread thread = new Thread(() -> {
+            try {
+                OutputStream os = socket.getOutputStream();
+                System.out.println("[출력 스트림 획득]");
+                BufferedOutputStream bos = new BufferedOutputStream(os, 8192);
+
+                InputStream inputStream = System.in;
+                BufferedInputStream bufferedInputStream = new BufferedInputStream(inputStream, 8192);
+
+                byte[] buffer = new byte[3];
+                int bufferLen;
+                while ((bufferLen = bufferedInputStream.read(buffer)) != -1) {
+                    bos.write(buffer, 0, bufferLen);
+                    bos.flush();
+                    System.out.println("flush 완료");
+                }
+//                bos.close();
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+        });
+
+        thread.start();
         while ((len = isr.read(cBuffer)) != -1) {
-            int cLen = 0;
-            for (int i = 0; i < cBuffer.length; i++) {
-                if (cBuffer[i] == '\n') {
-                    idx++;
-                }
-                else {
-                    cLen++; // cLen = i + 1;로 해도 동일
-                    arr[idx] += cBuffer[i];
-                }
-            }
-//            sb.append(cBuffer, 0, cLen);
-//            arr[idx] = new String(cBuffer, 0, cLen);
-            if(cLen != len) {
-            }
-        }
-        for (int i = 0; i < arr.length; i++) {
-            System.out.println(arr[i]);
+            String s = new String(cBuffer, 0, len);
+            System.out.print(s);
         }
     }
 }
