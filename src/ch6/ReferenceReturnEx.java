@@ -12,7 +12,7 @@ public class ReferenceReturnEx {
         Data data2 = copy1(data1);
         System.out.println(data1 + " " + data1.value);
         System.out.println(data2 + " " + data2.value);
-        System.out.println();
+        System.out.println("\n");
 
         Data data3 = copy2(data1);
         System.out.println(data1 + " " + data1.value);
@@ -21,7 +21,7 @@ public class ReferenceReturnEx {
 
     static Data copy1(Data data) {
         Data tmp = new Data();
-        tmp.value = data.value; // 이 경우에는 data1, data2 참조변수의 주소값이 다르다
+        tmp.value = data.value; // 이 경우에는 data1, data2 참조변수의 주솟값이 다르다
         return tmp;
     }
 
@@ -31,3 +31,11 @@ public class ReferenceReturnEx {
         return tmp;
     }
 }
+
+/*
+ch6.Data@1540e19d 7
+ch6.Data@677327b6 7
+
+ch6.Data@1540e19d 7
+ch6.Data@1540e19d 7
+ */
