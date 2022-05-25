@@ -1,31 +1,43 @@
 package ch6;
 
 class Car {
-    String color;
-    String gearType;
-    int door;
+    private int num;
+    private String name;
 
     Car() {
-        this("white", "auto", 4);
+        // 생성자에서 생성자를 호출할 때는 this()를 사용하고, 반드시 첫째 줄에서 호출해야함
+//        System.out.println(); // 에러
+        this(7777, "Benz");
+        System.out.println();
     }
 
-    Car(String color) {
-        this(color, "auto", 4);
+    Car(int num) {
+        this(num, "BMW");
     }
 
-    Car(String color2, String gearType2, int door2) {
-        color = color2;
-        gearType = gearType2;
-        door = door2;
+    Car(int num, String name) {
+        this.num = num;
+        this.name = name;
+    }
+
+    @Override
+    public String toString() {
+        return "Car{" +
+                "num=" + num +
+                ", name='" + name + '\'' +
+                '}';
     }
 }
 
 public class CarTest2 {
     public static void main(String[] args) {
-        Car c1 = new Car();
-        Car c2 = new Car("blue");
+        Car car = new Car();
+        System.out.println(car);
 
-        System.out.println(c1.color + " " + c1.gearType + " " + c1.door);
-        System.out.println(c2.color + " " + c2.gearType + " " + c2.door);
+        Car car2 = new Car(2022);
+        System.out.println(car2);
+
+        Car car3 = new Car(4321, "sonata");
+        System.out.println(car3);
     }
 }
