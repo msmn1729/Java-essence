@@ -14,6 +14,8 @@ public class ExceptionEx7 {
                 System.out.println("true");
             }
             System.out.println("ArithmeticException");
+//            ae.printStackTrace();
+            System.out.println(ae.getMessage());
         } catch (Exception e) {
             System.out.println("Exception");
         }
